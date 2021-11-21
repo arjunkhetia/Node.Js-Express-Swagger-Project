@@ -25,6 +25,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "express-swagger-generator": "^1.1.17",
     "nodemon": "^2.0.15"
   }
 }

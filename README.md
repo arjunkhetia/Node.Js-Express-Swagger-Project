@@ -1,4 +1,4 @@
-# Node-Express Project   ![Version][version-image]
+# Node-Express-Swagger Project   ![Version][version-image]
 
 ![Linux Build][linuxbuild-image]
 ![Windows Build][windowsbuild-image]
@@ -7,10 +7,10 @@
 ![Dependency Status][dependency-image]
 ![devDependencies Status][devdependency-image]
 
-The quickest way to get start with Node.Js & Express, just clone the project:
+The quickest way to get start with Node.Js, Express & Swagger API Documentation, just clone the project:
 
 ```bash
-$ git clone https://github.com/arjunkhetia/Node.Js-Express-Project.git
+$ git clone https://github.com/arjunkhetia/Node.Js-Express-Swagger-Project.git
 ```
 
 Install dependencies:
@@ -24,6 +24,46 @@ Start Express.js app at `http://localhost:3000/`:
 ```bash
 $ npm start
 ```
+
+# Swagger - API Documentation
+
+The design and documentation for teams and individuals working with the OpenAPI Specification. Simplify API development for users, teams and enterprises with the Swagger open source.
+
+Open http://<app_host>:<app_port>/api-docs (`http://localhost:3000/api-docs`) in our browser to view the documentation.
+
+```js
+var app = express();
+var expressSwagger = require('express-swagger-generator')(app);
+let options = {
+  swaggerDefinition: {
+    info: {
+      description: 'This is a swagger server for API Documentation',
+      title: 'Node.Js-Express-Swagger-Server',
+      version: '1.0.0',
+    },
+    host: 'localhost:3000',
+    basePath: '/',
+    produces: [
+      "application/json",
+      "application/xml"
+    ],
+    schemes: ['http', 'https'],
+    securityDefinitions: {
+      JWT: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: "JSON Web Token",
+      }
+    }
+  },
+  basedir: __dirname, //app absolute path
+  files: ['./routes/**/*.js'] //Path to the API handle folder
+};
+expressSwagger(options);
+```
+
+![Swagger Tool](https://github.com/arjunkhetia/Node.Js-Express-Swagger-Project/blob/master/public/swagger.png "Swagger Tool")
 
 # Nodemon
 
@@ -157,7 +197,7 @@ app.use(require('express-status-monitor')({
 }));
 ```
 
-![Monitoring Page](https://github.com/arjunkhetia/Node.Js-Express-Project/blob/master/public/status-monitor.png "Monitoring Page")
+![Monitoring Page](https://github.com/arjunkhetia/Node.Js-Express-Swagger-Project/blob/master/public/status-monitor.png "Monitoring Page")
 
 [version-image]: https://img.shields.io/badge/Version-1.0.0-orange.svg
 [linuxbuild-image]: https://img.shields.io/badge/Linux-passing-brightgreen.svg
