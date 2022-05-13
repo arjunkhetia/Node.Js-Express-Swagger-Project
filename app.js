@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var { create } = require('express-handlebars');
 var logger = require('morgan');
 var loggerutil = require('./utilities/logger');
@@ -55,6 +54,7 @@ expressSwagger(options);
 app.use(require('express-status-monitor')({
   title: 'Server Status',
   path: '/status',
+  // socketPath: '/socket.io', // In case you use a custom path for socket.io
   // websocket: existingSocketIoInstance,
   spans: [{
     interval: 1,
@@ -70,6 +70,8 @@ app.use(require('express-status-monitor')({
     cpu: true,
     mem: true,
     load: true,
+    eventLoop: true,
+    heap: true,
     responseTime: true,
     rps: true,
     statusCodes: true
@@ -79,7 +81,8 @@ app.use(require('express-status-monitor')({
     host: 'localhost',
     path: '/',
     port: '3000'
-  }]
+  }],
+  // ignoreStartsWith: '/admin'
 }));
 
 // compress all responses
@@ -145,8 +148,8 @@ app.use(logger(':remote-addr :remote-user :datetime :req[header] :method :url HT
 // Helmet helps for securing Express apps by setting various HTTP headers
 app.use(helmet());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
